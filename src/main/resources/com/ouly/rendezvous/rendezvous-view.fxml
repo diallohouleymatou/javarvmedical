@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ouly.rendezvous.controller.RendezVousController"
+      styleClass="root" spacing="20">
+
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <VBox styleClass="card">
+        <Label text="Prise de Rendez-vous" styleClass="title"/>
+
+        <GridPane hgap="10" vgap="10">
+            <padding>
+                <Insets top="20"/>
+            </padding>
+
+            <Label text="Spécialité:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <ComboBox fx:id="specialiteComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                      styleClass="combo-box" maxWidth="Infinity"/>
+
+            <Label text="Médecin:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="medecinComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                      styleClass="combo-box" maxWidth="Infinity"/>
+
+            <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                       styleClass="date-picker" maxWidth="Infinity"/>
+        </GridPane>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="20"/>
+            </padding>
+            <Button text="Annuler" onAction="#onAnnulerClick" styleClass="button"/>
+            <Button text="Confirmer" onAction="#onConfirmerClick" styleClass="button"/>
+        </HBox>
+    </VBox>
+
+    <VBox styleClass="card">
+        <Label text="Mes Rendez-vous" styleClass="title"/>
+        <TableView fx:id="rendezVousTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="dateColumn" text="Date"/>
+                <TableColumn fx:id="medecinColumn" text="Médecin"/>
+                <TableColumn fx:id="specialiteColumn" text="Spécialité"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <Label fx:id="messageLabel" styleClass="success-label"/>
+</VBox>

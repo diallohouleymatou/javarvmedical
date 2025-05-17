@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.ouly.rendezvous.controller.RendezVousController" styleClass="background">
+    <VBox alignment="CENTER" spacing="25" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+        <Label text="Réserver un rendez-vous" styleClass="title" />
+        <GridPane hgap="15" vgap="15" styleClass="form">
+            <Label text="Médecin" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="medecinField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Label text="Patient" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="patientField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <Label text="Date" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        </GridPane>
+        <HBox spacing="15" alignment="CENTER">
+            <Button fx:id="reserverButton" text="Confirmer la réservation" styleClass="btn-primary" onAction="#handleReserver" />
+            <Button text="Retour à l'accueil" onAction="#goToAccueil" />
+        </HBox>
+        <Label fx:id="statusLabel" styleClass="status" />
+    </VBox>
+</AnchorPane>
+
