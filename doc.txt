@@ -1,0 +1,56 @@
+Résumé
+Ce document décrit la mise en œuvre d’une application de gestion de rendez‑vous médicaux en JavaFX avec persistance via Hibernate et PostgreSQL. Il précise l’architecture logicielle, le schéma des entités annotées Hibernate, la stratégie de gestion de la concurrence (optimistic locking), l’intégration des threads JavaFX pour les opérations de réservation, ainsi que le planning de réalisation succinct.
+
+1. Objectifs
+Fonctionnels : permettre aux patients de réserver, modifier ou annuler un rendez‑vous, aux médecins de valider ou refuser, et au secrétariat de superviser tous les créneaux.
+
+Non‑fonctionnels : application réactive (JavaFX Task/Service), persistance robuste (Hibernate + PostgreSQL), prévention des conflits de réservation simultanée.
+
+2. Architecture globale
+2.1 Couche Présentation (JavaFX)
+FXML + CSS pour la vue.
+
+javafx.concurrent.Task et Service pour exécuter les opérations Hibernate en arrière‑plan sans bloquer l’UI (Stack Overflow).
+Crée un projet JavaFX de gestion de rendez-vous médicaux avec les contraintes suivantes :
+
+🔧 Technologies :
+- JavaFX pour l’interface utilisateur.
+- Hibernate 7 comme ORM.
+- PostgreSQL comme base de données.
+- Maven pour la gestion du projet.
+- Java Threads pour gérer la concurrence (ex : plusieurs patients qui réservent le même créneau).
+- Un fichier `application.properties` pour la configuration.
+- Un `EntityManager` centralisé dans `com.ouly.gestionrendezvousmedical.JpaUtils.EntityManagerUtils`, accessible depuis tout le projet.
+
+📁 Structure du projet :
+- `model` → entités Hibernate (`Patient`, `Medecin`, `Specialite`, `RendezVous`, etc.).
+- `dao` → classes d’accès aux données.
+- `service` → logique métier (gestion des créneaux, conflits de rendez-vous...).
+- `controller` → contrôleurs JavaFX.
+- `utils` → classe `EntityManagerUtils` pour gérer un `EntityManager` partagé.
+- `concurrency` → classes de gestion des threads.
+
+🧵 Threads Java :
+- Simuler plusieurs patients qui tentent de réserver le même créneau horaire pour mettre en évidence les risques de conflits.
+- Implémenter une solution de synchronisation (par exemple avec `synchronized`, `ReentrantLock`, ou `Semaphore`) pour éviter la double réservation.
+- Logger les tentatives de réservation et leur statut (succès ou échec) pour bien montrer l’impact des threads.
+
+🔐 Authentification :
+- Les patients peuvent se connecter (login basique sans sécurité avancée pour l’instant).
+- Une fois connectés, ils peuvent voir les médecins disponibles par spécialité et réserver un rendez-vous.
+
+🗃 Exemple d’entités :
+- `Patient(id, nom, email, motDePasse)`
+- `Medecin(id, nom, specialite)`
+- `Specialite(id, nom)`
+- `RendezVous(id, dateHeure, medecin_id, patient_id)`
+
+🎯 Objectif :
+- Bien illustrer l’usage des threads pour gérer des accès concurrents à des ressources critiques (créneaux de rendez-vous).
+- Architecture propre, maintenable, respectant les bonnes pratiques Java.
+
+💡 Exemple : Deux threads simulant deux patients qui veulent le même créneau avec le même médecin — l’un doit réussir, l’autre doit échouer proprement, sans exception.
+
+
+
+
